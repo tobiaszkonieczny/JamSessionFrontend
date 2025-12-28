@@ -1,0 +1,19 @@
+@import "../node_modules/leaflet/dist/leaflet.css";
+
+html {
+  height: 100%;
+  background-color: #15151c;
+}
+
+body {
+  height: 100%;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif, "Monospaced", sans-serif;
+}

@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="header">
+    <h1>Musicians Directory</h1>
+    <p class="subtitle">Find and connect with talented musicians</p>
+  </div>
+
+  <div class="filters-section">
+    <div class="filters-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Music Genre</mat-label>
+        <mat-select [(value)]="selectedGenre" (selectionChange)="selectedGenre.set($event.value)">
+          @if (selectedGenre()) {
+            <mat-option (click)="clearGenre()">Clear</mat-option>
+          }
+          @for (genre of genreOptions(); track genre) {
+            <mat-option [value]="genre">{{ genre }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Instrument</mat-label>
+        <mat-select [(value)]="selectedInstrument" (selectionChange)="selectedInstrument.set($event.value)">
+          @if (selectedInstrument()) {
+            <mat-option (click)="clearInstrument()">Clear</mat-option>
+          }
+          @for (instrument of instrumentOptions(); track instrument) {
+            <mat-option [value]="instrument">{{ instrument }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button 
+      mat-stroked-button 
+      class="reset-btn" 
+      (click)="clearAllFilters()" 
+      [disabled]="!selectedGenre() && !selectedInstrument()">
+      <mat-icon>clear_all</mat-icon>
+      Reset Filters
+    </button>
+  </div>
+
+  <div class="results-info">
+    <p>{{ filteredUsers().length }} {{ filteredUsers().length === 1 ? 'musician' : 'musicians' }} found</p>
+  </div>
+
+  <div class="users-grid">
+    @for (user of filteredUsers(); track user.id) {
+      <mat-card class="user-card mat-elevation-z4">
+        <div class="card-header">
+          <div class="profile-image-container">
+            @if (user.profilePictureId) {
+              <app-lazy-image 
+                [src]="'images/'+ user.profilePictureId.toString()" 
+                [cssClass]="'profile-image'"
+                [style]="{ 'width': '80px', 'height': '80px', 'border-radius': '50%', 'object-fit': 'cover' }"
+                [altText]="user.name || 'User profile'">
+              </app-lazy-image>
+            } @else {
+              <div class="profile-placeholder">
+                <mat-icon>person</mat-icon>
+              </div>
+            }
+          </div>
+          <div class="user-info">
+            <h3>{{ user.name }}</h3>
+            <p class="user-email">{{ user.email }}</p>
+          </div>
+        </div>
+
+        <mat-card-content>
+          @if (user.bio) {
+            <p class="user-bio">{{ user.bio }}</p>
+          }
+
+          @if (user.musicGenres && user.musicGenres.length > 0) {
+            <div class="section">
+              <h4><mat-icon>music_note</mat-icon> Favorite Genres</h4>
+              <mat-chip-set>
+                @for (genre of user.musicGenres; track genre.id) {
+                  <mat-chip>{{ genre.name }}</mat-chip>
+                }
+              </mat-chip-set>
+            </div>
+          }
+
+          @if (user.instrumentsAndRatings && user.instrumentsAndRatings.length > 0) {
+            <div class="section">
+              <h4><mat-icon>piano</mat-icon> Instruments</h4>
+              <div class="instruments-list">
+                @for (item of user.instrumentsAndRatings; track item.instrumentsAndRatingsId) {
+                  <div class="instrument-item">
+                    <span class="instrument-name">{{ item.name }}</span>
+                    <span class="rating">★ {{ item.rating }}/10</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="navigateToProfile(user.id)">
+            <mat-icon>arrow_forward</mat-icon>
+            View Profile
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>search_off</mat-icon>
+        <h3>No musicians found</h3>
+        <p>Try adjusting your filters</p>
+      </div>
+    }
+  </div>
+</div>

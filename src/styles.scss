@@ -1,0 +1,46 @@
+@use "@angular/material" as mat;
+@import "../node_modules/leaflet/dist/leaflet.css";
+@import '@fontsource/poppins/200.css';
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/700.css';
+
+
+html {
+  height: 100%;
+  background-color: #15151c;
+}
+
+body {
+  height: 100%;
+
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+html {
+  font-family: "Poppins", Arial, Helvetica, sans-serif, "Monospaced", sans-serif;
+}
+
+
+mat-icon {
+  vertical-align: middle;
+}
+
+
+
+$my-theme: mat.define-typography($config: (
+    plain-family: '"Poppins", sans-serif',
+    brand-family: '"Poppins", sans-serif',
+  ),
+);
+
+:root {
+  @include mat.all-component-typographies($my-theme);
+}

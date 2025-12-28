@@ -1,0 +1,69 @@
+<div class='outer-container'>
+
+  <div class="container">
+    <mat-card class='pfp-card'>
+      <mat-card-header class="card-header">
+        <h1 class='name'>
+          {{ user?.name }}
+        </h1>
+        @if (isChangePossible) {
+          <button class="editButton" (click)="onEditButtonClick()" mat-stroked-button>Edit profile</button>
+        }
+      </mat-card-header>
+
+      <div [style.background-image]="'url(' + userPictureUrl + ')'" class="pfp">
+        @if (isChangePossible) {
+          <div class="editImage" (click)="fileInput.click()">
+            <mat-icon>edit</mat-icon>
+          </div>
+          <input type="file" #fileInput (change)="onEditImage($event)" class="inputImage" accept=".png,.jpg,.jpeg">
+        }
+
+      </div>
+    </mat-card>
+    @if (user?.bio) {
+       <h2 class="section-title">Bio</h2>
+      <div class="bio-wrapper">
+       
+           <mat-card *ngIf="user?.bio!=undefined" class='bio'>
+      <mat-card-content>
+        {{ user?.bio }}
+      </mat-card-content>
+    </mat-card>
+      </div>
+      
+    }
+ 
+    <div class="chipSet">
+      @if (user?.musicGenres?.length) {
+        <h2 class="section-title">Genres</h2>
+      }
+      <mat-chip-set>
+
+        @for (genre of user?.musicGenres; track genre.id) {
+          <mat-chip><span>{{ genre.name }}</span></mat-chip>
+        }
+
+      </mat-chip-set>
+    </div>
+    @if (user?.instrumentsAndRatings?.length) {
+      <h2 class="section-title">Instruments</h2>
+    }
+    <mat-list *ngFor="let instrument of user?.instrumentsAndRatings" class='instruments'>
+      <mat-list-item>
+        <span class="instrumentSpan">{{ instrument.name }} {{ instrument.rating }}/5</span>
+        <mat-progress-bar [value]="(instrument?.rating || 0) * 20" mode=determinate></mat-progress-bar>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+
+    <div class="note note-1">♪</div>
+    <div class="note note-4">♬</div>
+    <div class="note note-5">♪</div>
+    <div class="note note-8">♬</div>
+
+  </div>
+
+
+</div>
+

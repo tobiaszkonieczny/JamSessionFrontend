@@ -1,0 +1,17 @@
+<div class="main-container">
+  <div class="form-wrapper">
+    <h1 class="title">Log In</h1>
+    <form [formGroup]="loginForm" (submit)= "login()" autocomplete="on" class="login-form">
+      <mat-form-field>
+        <label for="e-mail">E-mail</label>
+        <input matInput formControlName="email" type="text" id="e-mail">
+      </mat-form-field>
+      <mat-form-field>
+        <label for="password">Password</label>
+        <input matInput formControlName="password" type="password" id="password">
+      </mat-form-field>
+      <button mat-button class="submit" type="submit">Log in</button>
+    </form>
+    <div class = "forbidden" *ngIf="forbidden">Wrong password or email</div>
+  </div>
+</div>

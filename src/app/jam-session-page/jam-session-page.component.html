@@ -1,0 +1,316 @@
+@if (!isLoaded()) {
+
+} @else {
+  <div class="container">
+    <div class="background-animation"></div>
+    <mat-card class="jam-card mat-elevation-z4">
+      <mat-card-header>
+        <mat-card-title>
+          <h2>{{ owner() }}'s Jam Session</h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="info-grid">
+          <div class="info-item">
+            <mat-icon>calendar_today</mat-icon>
+            <span>{{ date() | date:'mediumDate' }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>access_time</mat-icon>
+            <span>{{ time() | slice:0:5 }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>music_note</mat-icon>
+            <span>{{ jamSession()?.musicGenre.name }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ address() }}</span>
+          </div>
+        </div>
+
+        <h3>Required Instruments</h3>
+        <mat-chip-set>
+          <mat-chip
+            (click)="openDialog(instrument.name)"
+            *ngFor="let instrument of groupedRequiredInstruments()"
+            [disabled]="isInstrumentConfirmed(instrument.name)"
+            color="primary"
+            selected
+          >
+            {{ instrument.name }} ({{ instrument.confirmed }}/{{ instrument.total }})
+          </mat-chip>
+        </mat-chip-set>
+        <div class="info">
+          <small *ngIf="!isAlreadySignedUp()">Click to sign up - Numbers show confirmed/total needed</small>
+          <small *ngIf="isAlreadySignedUp()" class="info-message">You are already signed up for this session</small>
+        </div>
+        <h3>My Signed-up Instruments</h3>
+        <mat-chip-set *ngIf="user()">
+          <mat-chip
+            (click)="openRemoveDialog()"
+            *ngFor="let item of myConfirmedInstruments()"
+            class="satisfied"
+            color="primary"
+            selected
+          >
+            {{ item.instrument.name }}
+          </mat-chip>
+        </mat-chip-set>
+        <div class="info" *ngIf="myConfirmedInstruments().length > 0">
+          <small>Click to leave session</small>
+        </div>
+        <!--      <small *ngIf="signedUpConfirmed">You have successfully signed up for this Jam Session</small>-->
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="">
+      <mat-card-content class="map-card">
+        <div class="">
+          <app-map [givenCoordinates]="coordinates()"></app-map>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+
+
+
+
+
+
+
+    <div class="floating-notes">
+      <div class="note note-1">♪</div>
+      <div class="note note-4">♬</div>
+      <div class="note note-8">♬</div>
+    </div>
+
+    <!-- Owner Section -->
+    <div class="mat-elevation-z8 owner-table">
+      <div class="table-header">Session Owner</div>
+      <table mat-table [dataSource]="ownerDataSource()">
+        <ng-container matColumnDef="attendee">
+          <th *matHeaderCellDef mat-header-cell> Name</th>
+          <td *matCellDef="let element" mat-cell> {{ element.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="instrument">
+          <th *matHeaderCellDef mat-header-cell> Role</th>
+          <td *matCellDef="let element" mat-cell> <span class="owner-badge">Owner</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="page">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let element" mat-cell>
+            <button (click)="navigateToPage(element.id)" class="next" mat-mini-fab>
+              <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="ownerColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ownerColumns;" mat-row></tr>
+      </table>
+    </div>
+
+    <!-- Participants Section -->
+    <div class="mat-elevation-z8">
+      <div class="table-header">Participants</div>
+      <table [dataSource]="dataSource()" mat-table>
+
+        <ng-container matColumnDef="attendee">
+          <th *matHeaderCellDef mat-header-cell> Attendee</th>
+          <td *matCellDef="let element" mat-cell> {{ element.user.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="instrument">
+          <th *matHeaderCellDef mat-header-cell> Instrument</th>
+          <td *matCellDef="let element" mat-cell> {{ element.instrument.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rating">
+          <th *matHeaderCellDef mat-header-cell> Rating</th>
+          <td *matCellDef="let element" mat-cell> {{ element.rating}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="page">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let element" mat-cell>
+            <button (click)="navigateToPage(element.user.id)" class="next" mat-mini-fab>
+              <mat-icon>
+                arrow_forward_ios
+              </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let element" mat-cell>
+            <button 
+              *ngIf="canRemoveParticipant()"
+              (click)="removeParticipant(element.user.id, element.user.name)" 
+              mat-icon-button 
+              color="warn"
+              matTooltip="Remove participant">
+              <mat-icon>person_remove</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="columns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+
+      </table>
+    </div>
+
+    <!-- Comments Section -->
+    <mat-card class="comments-card mat-elevation-z4">
+      <mat-card-header>
+        <mat-card-title>
+          <h3>Comments</h3>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Add Comment Form -->
+        <div class="comment-form">
+          <h3>{{ replyingTo() ? 'Reply to ' + replyingTo()!.author.name : 'Add a Comment' }}</h3>
+          @if (replyingTo()) {
+            <div class="replying-to-banner">
+              <span>Replying to: {{ replyingTo()!.message.substring(0, 50) }}{{ replyingTo()!.message.length > 50 ? '...' : '' }}</span>
+              <button mat-icon-button (click)="cancelReply()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          }
+          <mat-form-field appearance="outline" class="comment-input">
+            <mat-label>{{ replyingTo() ? 'Write your reply...' : 'Add a comment' }}</mat-label>
+            <textarea 
+              matInput 
+              [ngModel]="newCommentText()"
+              (ngModelChange)="newCommentText.set($event)"
+              rows="3" 
+              placeholder="Share your thoughts about this jam session..."
+              [disabled]="submittingComment()">
+            </textarea>
+          </mat-form-field>
+          
+          <div class="comment-actions">
+            <div class="image-upload-section">
+              <input 
+                type="file" 
+                #fileInput 
+                accept="image/*" 
+                (change)="onCommentImageSelected($event)"
+                style="display: none">
+              <button 
+                mat-stroked-button 
+                type="button" 
+                (click)="fileInput.click()"
+                [disabled]="submittingComment()">
+                <mat-icon>add_photo_alternate</mat-icon>
+                Add Image
+              </button>
+              <div *ngIf="imagePreview()" class="preview-container">
+                <img [src]="imagePreview()" class="preview-image" alt="preview">
+                <button 
+                  mat-icon-button 
+                  (click)="selectedImageFile.set(null); imagePreview.set(null)"
+                  class="remove-preview">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+            <button 
+              mat-raised-button 
+              color="primary" 
+              (click)="submitComment()"
+              [disabled]="submittingComment() || !newCommentText().trim()">
+              <mat-icon>send</mat-icon>
+              {{ replyingTo() ? 'Post Reply' : 'Post Comment' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Comments List -->
+        <div class="comments-list" *ngIf="comments().length > 0; else noComments">
+          <ng-container *ngTemplateOutlet="commentThread; context: { $implicit: comments(), depth: 0 }"></ng-container>
+        </div>
+        
+        <ng-template #commentThread let-commentList let-depth="depth">
+          <div class="comment-item" *ngFor="let comment of commentList" [style.margin-left.px]="depth * 20">
+            <div class="comment-header">
+              <div class="comment-author">
+                <mat-icon>person</mat-icon>
+                <strong>{{ comment.author.name }}</strong>
+              </div>
+              <div class="comment-meta">
+                <small>{{ comment.createdAt | date:'short' }}</small>
+                <button 
+                  *ngIf="isAdmin()" 
+                  mat-icon-button 
+                  color="warn" 
+                  (click)="deleteComment(comment)"
+                  matTooltip="Delete comment (Admin only)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <p class="comment-text">{{ comment.message }}</p>
+            <app-lazy-image 
+              *ngIf="comment.imageUrl" 
+              [src]="comment.imageUrl" 
+              [cssClass]="'comment-image'"
+              [style]="{ 'max-width': '100%', 'max-height': '400px', 'border-radius': '8px' }"
+              [altText]="'Comment image by ' + comment.author.name">
+            </app-lazy-image>
+            
+            <!-- Reactions -->
+            <div class="comment-reactions">
+              <div class="reaction-display" *ngIf="comment.reactionCount > 0">
+                <span *ngFor="let entry of comment.reactionSummary | keyvalue" class="reaction-count">
+                  {{ getReactionEmoji(entry.key) }} {{ entry.value }}
+                </span>
+              </div>
+              <div class="reaction-buttons">
+                <button 
+                  mat-button 
+                  *ngFor="let reaction of reactionTypes"
+                  (click)="reactToComment(comment.id, reaction.type)"
+                  [matTooltip]="reaction.label"
+                  class="reaction-btn">
+                  {{ reaction.emoji }}
+                </button>
+                <button 
+                  mat-button 
+                  *ngIf="canReply(comment)"
+                  (click)="replyToComment(comment)" 
+                  class="reply-btn">
+                  <mat-icon>reply</mat-icon>
+                  Reply
+                </button>
+              </div>
+            </div>
+            
+            <!-- Nested replies -->
+            <div class="replies" *ngIf="comment.replies && comment.replies.length > 0">
+              <ng-container *ngTemplateOutlet="commentThread; context: { $implicit: comment.replies, depth: depth + 1 }"></ng-container>
+            </div>
+          </div>
+        </ng-template>
+        
+        <ng-template #noComments>
+          <div class="no-comments">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            <p>No comments yet. Be the first to comment!</p>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+
+}
+

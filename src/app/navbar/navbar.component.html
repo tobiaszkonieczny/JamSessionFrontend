@@ -1,0 +1,40 @@
+<mat-toolbar>
+  <button class="title" mat-button routerLink="home">
+    <mat-icon fontIcon="home"></mat-icon>
+    JAM
+  </button>
+  <div class="spacer"></div>
+  @if (isAdmin()) {
+    <button [disabled]="noToken" mat-button routerLink="admin">
+      Admin
+    </button>
+  }
+  <button (click)="profileButton()" [disabled]="noToken" mat-button>
+    Profile
+  </button>
+  <button [disabled]="noToken" mat-button routerLink="jam-session">
+    Jam Session
+  </button>
+  <button [disabled]="noToken" mat-button routerLink="new-jam-session">
+    Create Jam
+  </button>
+  <button [disabled]="noToken" mat-button routerLink="my-jam-sessions">
+    My Sessions
+  </button>
+    <button [disabled]="noToken" mat-button routerLink="users">
+    Users
+  </button>
+    <button [disabled]="noToken" mat-button (click)="signedUpSessions()">
+    Signed Up Sessions
+  </button>
+  <button (click)="logOut()" [disabled]="noToken" mat-button routerLink="login">
+    Log out
+  </button>
+  <button [disabled]="!noToken" mat-button routerLink="login">
+    Log in
+  </button>
+  <button [disabled]="!noToken" mat-button routerLink="register">
+    Register
+  </button>
+</mat-toolbar>
+

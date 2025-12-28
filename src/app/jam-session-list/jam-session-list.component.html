@@ -1,0 +1,29 @@
+<div class="main-container">
+  <div class="filters-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Genre</mat-label>
+      <mat-select [(value)]="selectedGenre" (selectionChange)="onFilterChanged()" placeholder="All genres">
+        <mat-option (click)="clearGenre()" *ngIf="selectedGenre">Clear</mat-option>
+        @for (g of genresOptions; track g) {
+          <mat-option [value]="g">{{ g }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Instrument</mat-label>
+      <mat-select [(value)]="selectedInstrument" (selectionChange)="onFilterChanged()" placeholder="All instruments">
+        <mat-option (click)="clearInstrument()" *ngIf="selectedInstrument">Clear</mat-option>
+        @for (i of instrumentOptions; track i) {
+          <mat-option [value]="i">{{ i }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+   
+  </div>
+   <button mat-stroked-button class="reset-btn" (click)="clearAllFilters()" [disabled]="!selectedGenre && !selectedInstrument">Reset</button>
+  <div class="legend">
+    <span class="legend-item"><span class="dot dot-active"></span>Matched</span>
+    <span class="legend-item"><span class="dot dot-inactive"></span>Other</span>
+  </div>
+  <div id="jamSessionsMap" class="map-container"></div>
+</div>

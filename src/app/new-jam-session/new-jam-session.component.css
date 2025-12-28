@@ -1,0 +1,442 @@
+/* Layout */
+.new-session-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+}
+
+.page-title-row {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cards-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 960px) {
+  .cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Cards */
+.card {
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  background: #ffffff;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.card:hover {
+  box-shadow: 0 25px 70px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
+}
+
+.form-card {
+  animation-delay: 0.1s;
+}
+
+.map-card {
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::ng-deep .card mat-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem;
+  margin: 0;
+}
+
+::ng-deep .card mat-card-title {
+  color: #ffffff !important;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 !important;
+  letter-spacing: 0.3px;
+}
+
+::ng-deep .card mat-card-content {
+  padding: 2rem;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.field-row mat-form-field {
+  flex: 1;
+}
+
+::ng-deep mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #f9fafb;
+  border-radius: 12px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline__notch,
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-color: #e5e7eb;
+  border-width: 2px;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #667eea;
+  border-width: 2px;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: #667eea;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+  border-bottom-color: #667eea;
+}
+
+/* Selected Instruments Section */
+.selected-instruments {
+  margin: 1rem 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e9ecff 100%);
+  border-radius: 12px;
+  border: 2px solid #e0e7ff;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.selected-instruments h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4338ca;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.selected-instruments h3::before {
+  content: '🎸';
+  font-size: 1.3rem;
+}
+
+.instruments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.instrument-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  animation: chipPop 0.3s ease-out;
+}
+
+.instrument-item:hover {
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.instrument-name {
+  font-weight: 500;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.instrument-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity {
+  font-weight: 600;
+  font-size: 1.1rem;
+  min-width: 2rem;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.qty-btn {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  min-width: unset !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+.qty-btn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: scale(1.05);
+}
+
+.qty-btn mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  color: white !important;
+}
+
+.remove-btn {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  min-width: unset !important;
+  background: rgba(239, 68, 68, 0.9) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  margin-left: 0.5rem;
+}
+
+.remove-btn:hover {
+  background: rgba(220, 38, 38, 1) !important;
+  transform: scale(1.05);
+}
+
+.remove-btn mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  color: white !important;
+}
+
+@keyframes chipPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Address badge */
+.address-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e9ecff 100%);
+  color: #4338ca;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 2px solid #e0e7ff;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  animation: fadeIn 0.4s ease;
+}
+
+.address-row mat-icon {
+  color: #667eea;
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.address-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.actions button {
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 2rem !important;
+  border-radius: 12px !important;
+  font-size: 1rem !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.actions button:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+  transform: translateY(-2px);
+}
+
+.actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #9ca3af !important;
+  box-shadow: none !important;
+}
+
+/* Map */
+::ng-deep app-map {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.hint {
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 2px dashed #e5e7eb;
+}
+
+/* Mobile adjustments */
+@media (max-width: 959px) {
+  .new-session-layout {
+    padding: 1.5rem 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .cards-grid {
+    gap: 1.5rem;
+  }
+
+  ::ng-deep .card mat-card-content {
+    padding: 1.5rem;
+  }
+
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .selected-instruments {
+    padding: 1rem;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 599px) {
+  .new-session-layout {
+    padding: 1rem 0.75rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+  }
+
+  ::ng-deep .card mat-card-header {
+    padding: 1rem;
+  }
+
+  ::ng-deep .card mat-card-title {
+    font-size: 1.25rem !important;
+  }
+
+  ::ng-deep .card mat-card-content {
+    padding: 1rem;
+  }
+
+  .form {
+    gap: 1rem;
+  }
+
+  .selected-instruments h3 {
+    font-size: 1rem;
+  }
+
+  ::ng-deep .selected-instruments mat-chip {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 0.85rem !important;
+  }
+
+  .address-row {
+    padding: 0.85rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+

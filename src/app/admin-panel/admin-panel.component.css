@@ -1,0 +1,34 @@
+.admin-panel {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  color: #6366f1;
+  margin-bottom: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+button[type="submit"] {
+  margin-bottom: 1rem;
+}
+
+mat-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-divider {
+  margin: 2rem 0;
+}
+

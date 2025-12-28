@@ -1,0 +1,126 @@
+.main-container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 10px;
+}
+
+.reset-btn {
+  height: 56px;
+  width: 150px;
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.reset-btn:disabled { opacity: .45; cursor: default; }
+
+mat-form-field {
+  width: 100%;
+}
+
+.map-container {
+  width: 100%;
+  height: calc(100vh - 160px);
+  min-height: 450px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.legend {
+  display: flex;
+  gap: 18px;
+  font-size: 12px;
+  margin: 6px 0 12px;
+  color: #374151;
+  flex-wrap: wrap;
+}
+
+.legend-item { display: flex; align-items: center; gap: 6px; }
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 2px #fff;
+}
+.dot-active { background: #6366f1; }
+.dot-inactive { background: #9ca3af; opacity: .6; }
+
+.popup-content {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.popup-btn {
+  margin-top: 6px;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.popup-btn:hover {
+  background: #4f46e5;
+}
+
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: transparent;
+  --mdc-filled-text-field-focus-active-indicator-color: #6366f1;
+  --mdc-filled-text-field-focus-label-text-color: #6366f1;
+}
+
+/* Removed old table/list styling */
+
+.note {
+  pointer-events: none;
+  position: fixed;
+  font-size: 2rem;
+  color: rgba(99, 102, 241, 0.2);
+  animation: float 6s infinite;
+  z-index: -1;
+}
+
+.note-1 {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.note-2 {
+  bottom: 15%;
+  right: 10%;
+  animation-delay: 1s;
+}
+
+/* Expansion panel styles removed */
+
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 400px;
+  }
+  .filters-grid { grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 10px; }
+}
+

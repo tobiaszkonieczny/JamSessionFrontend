@@ -1,0 +1,242 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+  color: white;
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  opacity: 0.95;
+  margin: 0;
+}
+
+.loading,
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.loading mat-icon {
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 16px;
+  color: #6366f1;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty-state .note-icon {
+  font-size: 100px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
+  color: #cbd5e1;
+}
+
+.empty-state h2 {
+  margin: 0 0 12px 0;
+  color: #475569;
+  font-size: 2rem;
+}
+
+.empty-state p {
+  margin: 0 0 32px 0;
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.session-card {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.session-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15) !important;
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 20px !important;
+}
+
+.session-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.session-title mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+mat-card-content {
+  padding: 24px !important;
+  flex: 1;
+}
+
+.session-info {
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.info-row mat-icon {
+  color: #6366f1;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.my-instruments-section {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 12px;
+  border-left: 4px solid #f59e0b;
+}
+
+.my-instruments-section h4 {
+  margin: 0 0 12px 0;
+  color: #92400e;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.my-instruments-section h4 mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.my-chip {
+  background: #f59e0b !important;
+  color: white !important;
+  font-weight: 500;
+}
+
+.no-instruments {
+  color: #92400e;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.instruments-section {
+  margin-bottom: 20px;
+}
+
+.instruments-section h4 {
+  margin: 0 0 12px 0;
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+mat-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+mat-chip {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.85rem;
+  border-radius: 16px;
+}
+
+.attendees-section {
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.attendees-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ede9fe;
+  color: #6366f1;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.attendees-badge mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.card-actions {
+  padding: 16px 24px !important;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: center;
+}
+
+.card-actions button {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .sessions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+}

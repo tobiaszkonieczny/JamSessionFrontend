@@ -1,0 +1,89 @@
+<div class="outer-container">
+  <div class="container">
+    <h1 class="title">Edit profile</h1>
+    <form (submit)="editUser()" *ngIf="editForm.get('name')" [formGroup]="editForm"
+          class="register-form">
+
+      <mat-form-field>
+        <label for="name">Name:</label>
+        <input formControlName="name" id="name" matInput name="name" type="text">
+        <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched">
+          <small *ngIf="editForm.get('name')?.hasError('minlength')">Name must be at least 3 characters
+            long.</small>
+        </div>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <label for="email">E-mail:</label>
+        <input autocomplete="new-email" formControlName="email" id="email" matInput name="email" type="text">
+        <div *ngIf="editForm.get('email')?.invalid && editForm.get('email')?.touched">
+          <small *ngIf="editForm.get('email')?.hasError('email')">Please enter a valid email address.</small>
+        </div>
+      </mat-form-field>
+      <mat-form-field>
+        <label for="bio">Bio:</label>
+        <input formControlName="bio" id="bio" matInput name="bio" type="text">
+        <div *ngIf="editForm.get('bio')?.invalid && editForm.get('bio')?.touched">
+          <small *ngIf="editForm.get('bio')?.hasError('bio')">Please enter a valid email address.</small>
+        </div>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <label for="password">Password</label>
+        <input autocomplete="new-password" formControlName="password" id='password' matInput type="password">
+        <div *ngIf="editForm.get('password')?.invalid && editForm.get('password')?.touched">
+          <small *ngIf="editForm.get('password')?.hasError('minlength')">Password must be at least 6 characters
+            long.</small>
+        </div>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <label for="password">Re-type password</label>
+        <input autocomplete="off" formControlName="secondPassword" id='secondPassword' matInput type="password">
+        <div *ngIf="editForm.get('secondPassword')?.invalid && editForm.get('secondPassword')?.touched">
+          <small *ngIf="editForm.get('secondPassword')?.hasError('required')">Confirm Password is required.</small>
+        </div>
+        <div *ngIf="editForm.errors?.['passwordsMismatch']">
+          <small>Passwords do not match.</small>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Genres</mat-label>
+        <mat-select formControlName="genres" id="genres" multiple>
+          @for (genre of musicGenres; track genre) {
+            <mat-option [value]="genre.name">{{ genre.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Instruments</mat-label>
+        <mat-select (selectionChange)="onSelectionChange($event.value)" formControlName="selectedInstruments" multiple
+                    panelClass="select-panel-up">
+          <mat-option *ngFor="let instrument of allInstruments" [value]="instrument.name">
+            {{ instrument.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="instrumentsArray?.controls!.length > 0" formArrayName="instruments">
+        <div *ngFor="let instrumentGroup of instrumentsArray.controls; let i = index" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ instrumentGroup.get('name')?.value }} rating</mat-label>
+            <input formControlName="rating" matInput max="5" min="1" type="number">
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <button [disabled]="editForm.invalid" class="submit" mat-button type="submit">
+        SAVE
+      </button>
+    </form>
+  </div>
+</div>

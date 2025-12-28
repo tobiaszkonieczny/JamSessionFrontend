@@ -1,0 +1,45 @@
+.outer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+
+}
+
+.container {
+
+
+  width: 40%;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.title {
+  font-size: 3rem;
+  color: var(--mat-sys-background);
+  text-align: center;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: var(--mat-sys-background);
+}
+
+input {
+  margin: 3px;
+}
+
+.submit {
+  border: 1px solid var(--mat-sys-primary);
+  font-size: 1rem;
+}
+
+.already-exists {
+  padding: 5px;
+  color: darkred;
+}

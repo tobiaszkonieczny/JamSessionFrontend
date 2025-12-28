@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="header">
+    <h1>My Jam Sessions</h1>
+    <p class="subtitle">Manage and organize your jam sessions</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>Loading your jam sessions...</p>
+    </div>
+  } @else if (!hasJamSessions()) {
+    <div class="empty-state">
+      <mat-icon class="note-icon">music_off</mat-icon>
+      <h2>No Jam Sessions Yet</h2>
+      <p>You haven't created any jam sessions. Start jamming!</p>
+      <button mat-raised-button color="primary" (click)="createJamSession()">
+        <mat-icon>add</mat-icon>
+        Create Jam Session
+      </button>
+    </div>
+  } @else {
+    <div class="sessions-grid">
+      @for (session of jamSessions(); track session.id) {
+        <mat-card class="session-card">
+          <mat-card-header>
+            <mat-card-title>
+              <div class="session-title">
+                <mat-icon>music_note</mat-icon>
+                <span>{{ session.musicGenre.name }} Session</span>
+              </div>
+            </mat-card-title>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <div class="session-info">
+              <div class="info-row">
+                <mat-icon>calendar_today</mat-icon>
+                <span>{{ formatDate(session.startTime) }}</span>
+              </div>
+              <div class="info-row">
+                <mat-icon>location_on</mat-icon>
+                <span>{{ session.location.latitude }}, {{ session.location.longitude }}</span>
+              </div>
+            </div>
+
+            <div class="instruments-section">
+              <h4>Required Instruments</h4>
+              <mat-chip-set>
+                @for (instrument of session.requiredInstruments; track instrument.id) {
+                  <mat-chip>{{ instrument.name }}</mat-chip>
+                }
+              </mat-chip-set>
+            </div>
+
+            <div class="confirmed-section">
+              <h4>Confirmed Attendees: {{ session.confirmedInstruments.length }}</h4>
+            </div>
+          </mat-card-content>
+
+          <div class="card-actions">
+            <button mat-button (click)="viewSession(session.id)">
+              <mat-icon>visibility</mat-icon>
+              View
+            </button>
+            <button mat-button (click)="editSession(session)">
+              <mat-icon>edit</mat-icon>
+              Edit
+            </button>
+            <button mat-button color="warn" (click)="deleteSession(session)">
+              <mat-icon>delete</mat-icon>
+              Delete
+            </button>
+          </div>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

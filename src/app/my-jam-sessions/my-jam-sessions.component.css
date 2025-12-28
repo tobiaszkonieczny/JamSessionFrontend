@@ -1,0 +1,245 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #f8fafc, #f1f5f9, #e0e7ff, #ede9fe);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 16px;
+}
+
+.loading mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #6366f1;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  font-size: 1.125rem;
+  color: #64748b;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state .note-icon{
+  font-size: 96px;
+  width: 96px;
+  height: 96px;
+  color: #cbd5e1;
+  margin-bottom: 24px;
+}
+
+.empty-state h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 32px 0;
+}
+
+.empty-state button {
+  padding: 12px 32px;
+}
+
+/* Sessions Grid */
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .sessions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Session Cards */
+.session-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.session-card mat-card-header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  padding: 20px !important;
+  margin: 0 !important;
+}
+
+.session-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.session-title mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+mat-card-content {
+  padding: 24px !important;
+  flex: 1;
+}
+
+/* Session Info */
+.session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+}
+
+.info-row mat-icon {
+  color: #6366f1;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.info-row span {
+  font-size: 0.9375rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+/* Instruments Section */
+.instruments-section,
+.confirmed-section {
+  margin-bottom: 20px;
+}
+
+.instruments-section h4,
+.confirmed-section h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+mat-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+mat-chip {
+  background-color: #ede9fe !important;
+  color: #6366f1 !important;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* Card Actions */
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  gap: 8px;
+}
+
+.card-actions button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.card-actions button mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.card-actions button:hover {
+  background-color: #e2e8f0;
+}
+
+.card-actions button[color="warn"]:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}

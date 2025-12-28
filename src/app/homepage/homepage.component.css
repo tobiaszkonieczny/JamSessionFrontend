@@ -1,0 +1,101 @@
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  color: var(--mat-sys-background);
+  font-size: 6rem;
+}
+
+.slogan {
+  color: var(--mat-sys-primary);
+  font-size: 2rem;
+}
+
+.floating-notes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.note {
+  pointer-events: none;
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  animation: float 6s infinite;
+}
+
+.note-1 {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+/*.note-2 {*/
+/*  top: 20%;*/
+/*  right: 20%;*/
+/*  animation-delay: 1.5s;*/
+/*}*/
+.note-3 {
+  bottom: 30%;
+  left: 30%;
+  animation-delay: 1.2s;
+}
+
+.note-4 {
+  bottom: 10%;
+  right: 10%;
+  animation-delay: 0.5s;
+}
+
+.note-5 {
+  top: 40%;
+  right: 20%;
+  animation-delay: 1s;
+}
+
+.note-6 {
+  top: 60%;
+  right: 40%;
+  animation-delay: 0.7s;
+}
+
+.note-7 {
+  top: 35%;
+  right: 50%;
+  animation-delay: 3.5s;
+}
+
+.note-8 {
+  top: 90%;
+  right: 40%;
+  animation-delay: 0.5s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
