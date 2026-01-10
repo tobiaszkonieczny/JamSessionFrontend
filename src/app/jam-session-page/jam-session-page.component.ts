@@ -232,7 +232,7 @@ export class JamSessionPageComponent {
     }
     
     const matchingInstrument = currentUser.instrumentsAndRatings.find(
-      ir => ir.name === instrument
+      ir => ir.instrumentName === instrument
     );
     
     if (!matchingInstrument || !matchingInstrument.instrumentsAndRatingsId) {

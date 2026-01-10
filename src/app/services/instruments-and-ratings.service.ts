@@ -16,8 +16,8 @@ export class InstrumentsAndRatingsService {
   }
 
   addInstrumentsAndRatings(value: InstrumentsAndRatings[]): Observable<any> {
-    const filteredData = value.map(({instrumentId, rating}) => ({instrumentId, rating}));
-    return this.http.post(`${this.apiUrls.INSTRUMENTS_AND_RATINGS_URL}/new`,
+    const filteredData = value.map(({userId, instrumentId, rating}) => ({userId, instrumentId, rating}));
+    return this.http.post(`${this.apiUrls.INSTRUMENTS_AND_RATINGS_URL}/batch`,
       filteredData
     )
 

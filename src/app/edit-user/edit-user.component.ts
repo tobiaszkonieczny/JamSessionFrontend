@@ -124,9 +124,12 @@ export class EditUserComponent implements OnInit {
       const returnInstrument: InstrumentsAndRatings = {
         instrumentsAndRatingsId: undefined,
         instrumentId: tempInstrument?.id,
-        name: tempInstrument?.name,
-        rating: formValueInstrument.rating
+        instrumentName: tempInstrument?.name,
+        name: this.user?.name,
+        rating: formValueInstrument.rating,
+        userId: this.userId
       }
+      console.log(returnInstrument);
       return returnInstrument;
     })
 
@@ -158,7 +161,7 @@ export class EditUserComponent implements OnInit {
 
   private initForm(user: UserType): void {
     console.log(user);
-    const selectedInstrumentNames = user?.instrumentsAndRatings?.map(i => i.name) || []
+    const selectedInstrumentNames = user?.instrumentsAndRatings?.map(i => i.instrumentName) || []
     this.editForm = this.fb.group({
       name: [user.name, Validators.minLength(3)],
       email: [user.email, Validators.email],
@@ -168,7 +171,7 @@ export class EditUserComponent implements OnInit {
       genres: [user?.musicGenres.map((g) => g.name) || []],
       instruments: this.fb.array(user?.instrumentsAndRatings?.map(i =>
         this.fb.group({
-          name: new FormControl(i.name),
+          name: new FormControl(i.instrumentName),
           rating: new FormControl(i.rating, [Validators.min(1), Validators.max(5)]),
         })
       ) || []),

@@ -22,9 +22,11 @@ export type MusicGenre = {
 
 export type InstrumentsAndRatings = {
   instrumentsAndRatingsId: number | undefined,
-  instrumentId: number | undefined,
-  name: string | undefined,
   rating: number | undefined
+  instrumentId: number | undefined,
+  instrumentName: string | undefined,
+  userId: number | undefined,
+  name: string | undefined, 
 }
 
 export type ShortUser = {

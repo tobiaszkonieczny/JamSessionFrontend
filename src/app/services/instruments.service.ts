@@ -22,7 +22,6 @@ export class InstrumentsService {
 
 
   private mapToInstruments(json: any): Instrument[] {
-    
     const test = json.map((item: any) => ({id: item.id, name: item.name}));
     console.log(test);
     return test;

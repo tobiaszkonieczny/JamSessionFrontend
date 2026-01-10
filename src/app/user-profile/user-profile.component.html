@@ -51,7 +51,7 @@
     }
     <mat-list *ngFor="let instrument of user?.instrumentsAndRatings" class='instruments'>
       <mat-list-item>
-        <span class="instrumentSpan">{{ instrument.name }} {{ instrument.rating }}/5</span>
+        <span class="instrumentSpan">{{ instrument.instrumentName }} {{ instrument.rating }}/5</span>
         <mat-progress-bar [value]="(instrument?.rating || 0) * 20" mode=determinate></mat-progress-bar>
       </mat-list-item>
       <mat-divider></mat-divider>

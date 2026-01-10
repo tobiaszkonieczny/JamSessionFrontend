@@ -121,13 +121,18 @@ export class UserService {
     console.log(json);
     return json.map((item: {
       id: number;
-      instrument: { id: number; name: string };
       rating: number
+      instrumentId: number;
+      instrumentName: string;
+      userId: number;
+      name: string
     }) => ({
       instrumentsAndRatingsId: item.id,
-      instrumentId: item.instrument.id,
-      name: item.instrument.name,
-      rating: item.rating
+      rating: item.rating,
+      instrumentId: item.instrumentId,
+      instrumentName: item.instrumentName,
+      userId: item.userId,
+      name: item.name
     }))
   }
 
