@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+// Inicjalizacja rdzenia Material
+@include mat.core();
+
+// Definicja motywu (Material 3)
+$my-theme: mat.define-theme((color: (theme-type: light,
+                primary: mat.$violet-palette,
+                tertiary: mat.$rose-palette ),
+            typography: (brand-family: 'Roboto',
+                plain-family: 'Roboto',
+            ),
+            // NAPRAWA: density musi być mapą, a nie liczbą
+            density: (scale: 0)));
+
+html {
+    // Aplikujemy style komponentów
+    @include mat.all-component-themes($my-theme);
+
+    // Generujemy zmienne CSS dla Twoich stylów globalnych
+    @include mat.system-level-colors($my-theme);
+    @include mat.system-level-typography($my-theme);
+}

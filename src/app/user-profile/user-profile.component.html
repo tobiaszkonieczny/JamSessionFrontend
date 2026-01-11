@@ -1,69 +1,105 @@
-<div class='outer-container'>
-
-  <div class="container">
-    <mat-card class='pfp-card'>
-      <mat-card-header class="card-header">
-        <h1 class='name'>
-          {{ user?.name }}
-        </h1>
-        @if (isChangePossible) {
-          <button class="editButton" (click)="onEditButtonClick()" mat-stroked-button>Edit profile</button>
-        }
-      </mat-card-header>
-
-      <div [style.background-image]="'url(' + userPictureUrl + ')'" class="pfp">
-        @if (isChangePossible) {
-          <div class="editImage" (click)="fileInput.click()">
-            <mat-icon>edit</mat-icon>
+<div class='profile-container'>
+  <div class="profile-content">
+    <!-- Header Card with Profile Picture -->
+    <mat-card class='profile-header-card'>
+      <div class="profile-header">
+        <div class="profile-picture-wrapper">
+          <div [style.background-image]="'url(' + userPictureUrl + ')'" class="profile-picture">
+            @if (isChangePossible) {
+              <div class="edit-overlay" (click)="fileInput.click()">
+                <mat-icon>photo_camera</mat-icon>
+                <span>Change Photo</span>
+              </div>
+              <input type="file" #fileInput (change)="onEditImage($event)" class="file-input" accept=".png,.jpg,.jpeg">
+            }
           </div>
-          <input type="file" #fileInput (change)="onEditImage($event)" class="inputImage" accept=".png,.jpg,.jpeg">
-        }
-
+        </div>
+        
+        <div class="profile-info">
+          <h1 class='profile-name'>{{ user?.name }}</h1>
+          @if (isChangePossible) {
+            <button class="edit-profile-btn" (click)="onEditButtonClick()" mat-raised-button>
+              <mat-icon>edit</mat-icon>
+              <span>Edit Profile</span>
+            </button>
+          }
+        </div>
       </div>
     </mat-card>
+
+    <!-- Bio Section -->
     @if (user?.bio) {
-       <h2 class="section-title">Bio</h2>
-      <div class="bio-wrapper">
-       
-           <mat-card *ngIf="user?.bio!=undefined" class='bio'>
-      <mat-card-content>
-        {{ user?.bio }}
-      </mat-card-content>
-    </mat-card>
-      </div>
-      
+      <mat-card class='section-card bio-card'>
+        <mat-card-header>
+          <mat-card-title class="section-title">
+            <mat-icon>person</mat-icon>
+            <span>Bio</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="bio-content">
+          {{ user?.bio }}
+        </mat-card-content>
+      </mat-card>
     }
- 
-    <div class="chipSet">
-      @if (user?.musicGenres?.length) {
-        <h2 class="section-title">Genres</h2>
-      }
-      <mat-chip-set>
 
-        @for (genre of user?.musicGenres; track genre.id) {
-          <mat-chip><span>{{ genre.name }}</span></mat-chip>
-        }
+    <!-- Genres Section -->
+    @if (user?.musicGenres?.length) {
+      <mat-card class='section-card genres-card'>
+        <mat-card-header>
+          <mat-card-title class="section-title">
+            <mat-icon>library_music</mat-icon>
+            <span>Favorite Genres</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-chip-set class="genres-chips">
+            @for (genre of user?.musicGenres; track genre.id) {
+              <mat-chip highlighted>
+                <mat-icon>music_note</mat-icon>
+                {{ genre.name }}
+              </mat-chip>
+            }
+          </mat-chip-set>
+        </mat-card-content>
+      </mat-card>
+    }
 
-      </mat-chip-set>
-    </div>
+    <!-- Instruments Section -->
     @if (user?.instrumentsAndRatings?.length) {
-      <h2 class="section-title">Instruments</h2>
+      <mat-card class='section-card instruments-card'>
+        <mat-card-header>
+          <mat-card-title class="section-title">
+            <mat-icon>piano</mat-icon>
+            <span>Instruments & Skills</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="instruments-list">
+            @for (instrument of user?.instrumentsAndRatings; track instrument.instrumentsAndRatingsId) {
+              <div class="instrument-item">
+                <div class="instrument-header">
+                  <span class="instrument-name">{{ instrument.instrumentName }}</span>
+                  <span class="instrument-rating">{{ instrument.rating }}/5</span>
+                </div>
+                <mat-progress-bar 
+                  [value]="(instrument?.rating || 0) * 20" 
+                  mode="determinate"
+                  class="instrument-progress">
+                </mat-progress-bar>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
     }
-    <mat-list *ngFor="let instrument of user?.instrumentsAndRatings" class='instruments'>
-      <mat-list-item>
-        <span class="instrumentSpan">{{ instrument.instrumentName }} {{ instrument.rating }}/5</span>
-        <mat-progress-bar [value]="(instrument?.rating || 0) * 20" mode=determinate></mat-progress-bar>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-list>
-
-    <div class="note note-1">♪</div>
-    <div class="note note-4">♬</div>
-    <div class="note note-5">♪</div>
-    <div class="note note-8">♬</div>
-
   </div>
 
-
+  <!-- Floating Notes Background -->
+  <div class="floating-notes">
+    <div class="note note-1">♪</div>
+    <div class="note note-2">♫</div>
+    <div class="note note-3">♩</div>
+    <div class="note note-4">♬</div>
+  </div>
 </div>
 

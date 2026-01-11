@@ -1,9 +1,9 @@
-import {MusicGenre, ShortUser} from './user.type';
+import {InstrumentsAndRating, MusicGenre, ShortUser} from './user.type';
 
 export type JamSessionType = {
   id: number,
   owner: ShortUser,
-  confirmedInstruments: Instrument[]
+  confirmedInstruments: InstrumentsAndRating[]
   startTime: string,
   location: Location,
   requiredInstruments: Instrument[],

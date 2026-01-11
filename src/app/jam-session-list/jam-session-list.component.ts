@@ -1,13 +1,14 @@
 import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import {JamSessionService} from '../services/jam-session.service';
 import {JamSessionType} from '../model/jamSession.type';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgIf} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelect, MatOption} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import * as Leaflet from 'leaflet';
+import {MatCard, MatCardContent} from '@angular/material/card';
 
 @Component({
   selector: 'app-jam-session-list',
@@ -15,7 +16,11 @@ import * as Leaflet from 'leaflet';
     MatFormFieldModule,
     MatSelect,
     MatOption,
-    MatButtonModule
+    MatButtonModule,
+    MatIcon,
+    MatCard,
+    MatCardContent,
+    NgIf
   ],
   templateUrl: './jam-session-list.component.html',
   styleUrl: './jam-session-list.component.css'
@@ -160,7 +165,7 @@ export class JamSessionListComponent implements OnInit, AfterViewInit, OnDestroy
     this.jamSessions.forEach(js => {
       if (js.musicGenre?.name) genres.add(js.musicGenre.name);
       js.requiredInstruments?.forEach(i => instruments.add(i.name));
-      js.confirmedInstruments?.forEach(i => instruments.add(i.name));
+      js.confirmedInstruments?.forEach(i => { if(i.instrumentName) instruments.add(i.instrumentName); });
     });
     this.genresOptions = Array.from(genres).sort();
     this.instrumentOptions = Array.from(instruments).sort();

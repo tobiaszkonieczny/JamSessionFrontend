@@ -1,16 +1,33 @@
-<div class="container">
-  <div class="background-animation"></div>
-  <h1 class="title">Jam Session Hub</h1>
-  <div class="button-container">
-    <button (click)="newJam()" class="new-button" mat-raised-button color="primary">
-      <mat-icon>add</mat-icon> Create New Jam
-    </button>
+<div class="jam-session-hub-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="title-accent">Jam Session</span>
+        <span class="title-main">Hub</span>
+      </h1>
+      <p class="hero-subtitle">
+        Discover and join jam sessions near you, or create your own musical gathering
+      </p>
+      <button (click)="newJam()" class="create-jam-btn" mat-raised-button>
+        <mat-icon>add_circle</mat-icon>
+        <span>Create New Jam Session</span>
+      </button>
+    </div>
   </div>
-  <app-jam-session-list class="jam-list"></app-jam-session-list>
+
+  <!-- Jam Sessions List -->
+  <div class="jam-list-wrapper">
+    <app-jam-session-list></app-jam-session-list>
+  </div>
+
+  <!-- Floating Notes Background -->
   <div class="floating-notes">
     <div class="note note-1">♪</div>
     <div class="note note-2">♫</div>
     <div class="note note-3">♩</div>
     <div class="note note-4">♬</div>
+    <div class="note note-5">♪</div>
+    <div class="note note-6">♫</div>
   </div>
 </div>

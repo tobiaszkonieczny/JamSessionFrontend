@@ -15,7 +15,7 @@ import {
   MatDialogContent,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {MatButton, MatMiniFabButton} from '@angular/material/button';
+import {MatButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {UserService} from '../services/user.service';
 import {jwtDecode} from 'jwt-decode';
 import {InstrumentsAndRating, UserType} from '../model/user.type';
@@ -31,6 +31,7 @@ import {LazyImageComponent} from '../shared/lazy-image.component';
 import {AuthService} from '../services/auth.service';
 import {JamSessionService} from '../services/jam-session.service';
 import {MatTooltip} from '@angular/material/tooltip';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-jam-session-page',
@@ -38,17 +39,16 @@ import {MatTooltip} from '@angular/material/tooltip';
     MatCard,
     MatCardHeader,
     MatCardContent,
-    MatChip,
     NgForOf,
     MapComponent,
     MatIcon,
     SlicePipe,
     DatePipe,
     MatCardModule,
-    MatChipSet,
     NgIf,
     MatTableModule,
-    MatMiniFabButton,
+    MatProgressSpinner,
+    MatIconButton,
     FormsModule,
     MatInputModule,
     LazyImageComponent,

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
-import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatChip, MatChipSet} from '@angular/material/chips';
 import {MatDivider} from '@angular/material/divider';
 import {MatList, MatListItem} from '@angular/material/list';
@@ -18,14 +18,10 @@ import {MatIcon} from '@angular/material/icon';
   imports: [
     MatCard,
     MatCardHeader,
+    MatCardTitle,
     MatChipSet,
     MatCardContent,
-    MatDivider,
-    MatList,
     MatProgressBar,
-    MatListItem,
-    NgIf,
-    NgForOf,
     MatChip,
     MatButton,
     MatIcon

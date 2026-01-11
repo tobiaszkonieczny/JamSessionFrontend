@@ -12,7 +12,7 @@ import {
   Validators
 } from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatError, MatFormField, MatLabel, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
@@ -24,6 +24,8 @@ import {catchError, forkJoin, of} from 'rxjs';
 import {Instrument} from "../model/jamSession.type";
 import {InstrumentsService} from "../services/instruments.service";
 import {InstrumentsAndRatingsService} from "../services/instruments-and-ratings.service";
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-edit-user',
@@ -37,7 +39,15 @@ import {InstrumentsAndRatingsService} from "../services/instruments-and-ratings.
     MatSelect,
     MatOption,
     MatLabel,
-    NgForOf
+    NgForOf,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatIcon,
+    MatError,
+    MatPrefix,
+    MatSuffix
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.css'
@@ -48,6 +58,7 @@ export class EditUserComponent implements OnInit {
   musicGenres: MusicGenre[] | undefined;
   userId: number | undefined;
   allInstruments: Instrument[] = [];
+  initialInstruments: string[] = []; // Instrumenty które już były w profilu
 
   constructor(
     private path: ActivatedRoute,
@@ -79,6 +90,7 @@ export class EditUserComponent implements OnInit {
         this.user = user;
         this.musicGenres = genres;
         this.allInstruments = instruments;
+        this.initialInstruments = user?.instrumentsAndRatings?.map(i => i.instrumentName || '') || [];
         this.initForm(user);
       });
     }
@@ -87,12 +99,16 @@ export class EditUserComponent implements OnInit {
   onSelectionChange(selectedInstruments: string[]): void {
     if (!this.editForm) return;
 
+    // Upewnij się, że wszystkie początkowe instrumenty są zawsze wybrane
+    const allSelected = [...new Set([...this.initialInstruments, ...selectedInstruments])];
+
+    // Pobierz aktualne nazwy instrumentów w FormArray
     const existingInstrumentNames = this.instrumentsArray.controls.map(
       (control) => control.get('name')?.value
     );
 
-
-    selectedInstruments.forEach((instrumentName) => {
+    // Dodaj nowe instrumenty
+    allSelected.forEach((instrumentName) => {
       if (!existingInstrumentNames.includes(instrumentName)) {
         this.instrumentsArray.push(
           this.fb.group({
@@ -103,12 +119,18 @@ export class EditUserComponent implements OnInit {
       }
     });
 
+    // Usuń instrumenty, które zostały odznaczone (ale tylko te które NIE były początkowe)
     for (let i = this.instrumentsArray.length - 1; i >= 0; i--) {
       const control = this.instrumentsArray.at(i);
-      if (!selectedInstruments.includes(control.get('name')?.value)) {
+      const instrumentName = control.get('name')?.value;
+      // Nie usuwaj instrumentów które były już w profilu
+      if (!allSelected.includes(instrumentName) && !this.initialInstruments.includes(instrumentName)) {
         this.instrumentsArray.removeAt(i);
       }
     }
+
+    // Zaktualizuj selectedInstruments w formularzu
+    this.editForm.get('selectedInstruments')?.setValue(allSelected, {emitEvent: false});
   }
 
   editUser(): void {
@@ -164,7 +186,7 @@ export class EditUserComponent implements OnInit {
     const selectedInstrumentNames = user?.instrumentsAndRatings?.map(i => i.instrumentName) || []
     this.editForm = this.fb.group({
       name: [user.name, Validators.minLength(3)],
-      email: [user.email, Validators.email],
+      email: [{value: user.email, disabled: true}, Validators.email],
       password: [null, Validators.minLength(6)],
       secondPassword: [null, Validators.minLength(6)],
       bio: [user.bio, Validators.maxLength(500)],

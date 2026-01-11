@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {Router, RouterLink} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {jwtDecode} from 'jwt-decode';
@@ -13,6 +13,7 @@ import {AuthService} from '../services/auth.service';
   imports: [
     MatToolbar,
     MatButton,
+    MatIconButton,
     RouterLink,
     MatIcon
   ],
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
   token: string = '';
   userId: number = 0;
   router: Router = new Router()
+  mobileMenuOpen = false;
 
   constructor(private userService: UserService, public authService: AuthService) {
   }
@@ -72,6 +74,14 @@ export class NavbarComponent implements OnInit {
     const decodedToken = jwtDecode<JwtPayload>(this.token)
     this.userId = +(decodedToken['sub'] || '');
     this.authService.checkAdminStatus();
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
   }
 }
 

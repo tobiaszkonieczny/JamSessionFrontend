@@ -4,43 +4,24 @@
 @import '@fontsource/poppins/400.css';
 @import '@fontsource/poppins/700.css';
 
-
-html {
-  height: 100%;
-  background-color: #15151c;
-}
-
-body {
-  height: 100%;
-
-}
-
-html,
-body {
-  height: 100%;
-}
+// src/styles.scss
+@import 'styles/variables'; // Twoje paddingi itp.
+@import 'styles/theme';
 
 body {
   margin: 0;
+  background-color: var(--mat-sys-surface-container-low); // Jasne tło Material
+  font-family: Roboto, sans-serif;
 }
 
-html {
-  font-family: "Poppins", Arial, Helvetica, sans-serif, "Monospaced", sans-serif;
+// Globalne stylowanie kart
+mat-card {
+  border-radius: var(--radius-m) !important;
+  background-color: var(--mat-sys-surface) !important;
+  border: 1px solid var(--mat-sys-outline-variant); // Subtelna obwódka
 }
 
-
-mat-icon {
-  vertical-align: middle;
-}
-
-
-
-$my-theme: mat.define-typography($config: (
-    plain-family: '"Poppins", sans-serif',
-    brand-family: '"Poppins", sans-serif',
-  ),
-);
-
-:root {
-  @include mat.all-component-typographies($my-theme);
+// Przykład klasy dla fioletowego tekstu
+.text-primary {
+  color: var(--mat-sys-primary);
 }

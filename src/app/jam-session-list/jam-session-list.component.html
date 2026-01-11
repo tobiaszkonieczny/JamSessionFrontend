@@ -1,29 +1,74 @@
-<div class="main-container">
-  <div class="filters-grid">
-    <mat-form-field appearance="outline">
-      <mat-label>Genre</mat-label>
-      <mat-select [(value)]="selectedGenre" (selectionChange)="onFilterChanged()" placeholder="All genres">
-        <mat-option (click)="clearGenre()" *ngIf="selectedGenre">Clear</mat-option>
-        @for (g of genresOptions; track g) {
-          <mat-option [value]="g">{{ g }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Instrument</mat-label>
-      <mat-select [(value)]="selectedInstrument" (selectionChange)="onFilterChanged()" placeholder="All instruments">
-        <mat-option (click)="clearInstrument()" *ngIf="selectedInstrument">Clear</mat-option>
-        @for (i of instrumentOptions; track i) {
-          <mat-option [value]="i">{{ i }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-   
+<div class="jam-sessions-container">
+  <div class="content">
+    <!-- Filters Card -->
+    <mat-card class="filters-card">
+      <mat-card-content>
+        <div class="filters-header">
+          <h2 class="filters-title">
+            <mat-icon>filter_list</mat-icon>
+            <span>Find Jam Sessions</span>
+          </h2>
+        </div>
+        
+        <div class="filters-grid">
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Genre</mat-label>
+            <mat-select [(value)]="selectedGenre" (selectionChange)="onFilterChanged()" placeholder="All genres">
+              <mat-option (click)="clearGenre()" *ngIf="selectedGenre">
+                <mat-icon>clear</mat-icon>
+                Clear
+              </mat-option>
+              @for (g of genresOptions; track g) {
+                <mat-option [value]="g">{{ g }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>library_music</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Instrument</mat-label>
+            <mat-select [(value)]="selectedInstrument" (selectionChange)="onFilterChanged()" placeholder="All instruments">
+              <mat-option (click)="clearInstrument()" *ngIf="selectedInstrument">
+                <mat-icon>clear</mat-icon>
+                Clear
+              </mat-option>
+              @for (i of instrumentOptions; track i) {
+                <mat-option [value]="i">{{ i }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>piano</mat-icon>
+          </mat-form-field>
+
+          <button mat-raised-button class="reset-btn" (click)="clearAllFilters()" [disabled]="!selectedGenre && !selectedInstrument">
+            <mat-icon>refresh</mat-icon>
+            <span>Reset Filters</span>
+          </button>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item">
+            <span class="dot dot-active"></span>
+            <span>Matched Sessions</span>
+          </div>
+          <div class="legend-item">
+            <span class="dot dot-inactive"></span>
+            <span>Other Sessions</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Map Card -->
+    <mat-card class="map-card">
+      <div id="jamSessionsMap" class="map-container"></div>
+    </mat-card>
   </div>
-   <button mat-stroked-button class="reset-btn" (click)="clearAllFilters()" [disabled]="!selectedGenre && !selectedInstrument">Reset</button>
-  <div class="legend">
-    <span class="legend-item"><span class="dot dot-active"></span>Matched</span>
-    <span class="legend-item"><span class="dot dot-inactive"></span>Other</span>
+
+  <!-- Floating Notes Background -->
+  <div class="floating-notes">
+    <div class="note note-1">♪</div>
+    <div class="note note-2">♫</div>
+    <div class="note note-3">♩</div>
+    <div class="note note-4">♬</div>
   </div>
-  <div id="jamSessionsMap" class="map-container"></div>
 </div>

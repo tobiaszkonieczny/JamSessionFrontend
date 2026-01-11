@@ -1,0 +1,20 @@
+:root {
+    /* Kolory bazowe */
+    --color-primary: #673ab7; // Twój fiolet
+    --color-primary-light: #9575cd;
+    --color-bg: #f5f5f7; // Delikatne tło dla całej apki
+    --color-surface: #ffffff; // Tło kart i kontenerów
+
+    --spacing-xs: 4px;
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 24px;
+    --spacing-xl: 32px;
+
+    /* Zaokrąglenia */
+    --radius-m: 12px;
+    --radius-l: 20px;
+
+    /* Cienie */
+    --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.05);
+}

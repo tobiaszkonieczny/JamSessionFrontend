@@ -90,7 +90,7 @@ export class SignedUpJamSessionsComponent {
     
     return session.confirmedInstruments
       .filter(ci => (ci as any).user?.id === userId)
-      .map(ci => ci.name);
+      .map(ci => ci.instrumentName!);
   }
 
   leaveSession(session: JamSessionType): void {
