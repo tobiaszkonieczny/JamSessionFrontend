@@ -114,7 +114,7 @@ export class JamSessionPageComponent {
 
   ownerDataSource = computed(() => {
     const session = this.jamSession();
-    const ownerData = session?.ownerDto ? [session.ownerDto] : [];
+    const ownerData = session?.owner ? [session.owner] : [];
     return new MatTableDataSource(ownerData);
   });
 
@@ -178,11 +178,12 @@ export class JamSessionPageComponent {
 
   getOwner() {
     const session = this.jamSession();
-    if (!session?.ownerDto?.id) return;
+    if (!session?.owner?.id) return;
     
-    this.http.get<any>(`http://localhost:8080/api/users/${session.ownerDto.id}`)
+    this.http.get<any>(`http://localhost:8080/api/users/${session.owner.id}`)
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.owner.set(response.name);
         }
       });
@@ -306,7 +307,7 @@ export class JamSessionPageComponent {
   isOwner(): boolean {
     const session = this.jamSession();
     const currentUser = this.user();
-    return session?.ownerDto?.id === currentUser?.id;
+    return session?.owner?.id === currentUser?.id;
   }
 
   canRemoveParticipant(): boolean {

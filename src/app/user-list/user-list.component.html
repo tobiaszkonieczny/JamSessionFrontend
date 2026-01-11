@@ -91,8 +91,8 @@
               <div class="instruments-list">
                 @for (item of user.instrumentsAndRatings; track item.instrumentsAndRatingsId) {
                   <div class="instrument-item">
-                    <span class="instrument-name">{{ item.name }}</span>
-                    <span class="rating">★ {{ item.rating }}/10</span>
+                    <span class="instrument-name">{{ item.instrumentName }}</span>
+                    <span class="rating">★ {{ item.rating }}/5</span>
                   </div>
                 }
               </div>
