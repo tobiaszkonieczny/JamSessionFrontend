@@ -18,7 +18,7 @@ import {
 import {MatButton, MatMiniFabButton} from '@angular/material/button';
 import {UserService} from '../services/user.service';
 import {jwtDecode} from 'jwt-decode';
-import {UserType} from '../model/user.type';
+import {InstrumentsAndRating, UserType} from '../model/user.type';
 import {MatIcon} from '@angular/material/icon';
 import {API_URLS} from '../config/api-urls';
 import {Observable, of} from 'rxjs';
@@ -122,9 +122,8 @@ export class JamSessionPageComponent {
     const session = this.jamSession();
     const currentUser = this.user();
     if (!session?.confirmedInstruments || !currentUser?.id) return [];
-    
     return session.confirmedInstruments.filter(
-      (item: any) => item.user?.id === currentUser.id
+      (item: any) => item.userId === currentUser.id
     );
   });
 
@@ -149,10 +148,10 @@ export class JamSessionPageComponent {
     });
     
     // Count confirmed instruments
-    session.confirmedInstruments?.forEach((item: any) => {
-      const name = item.instrument.name;
-      if (grouped.has(name)) {
-        grouped.get(name)!.confirmed++;
+    session.confirmedInstruments?.forEach((item: InstrumentsAndRating) => {
+      const name = item.instrumentName;
+      if (grouped.has(name!)) {
+        grouped.get(name!)!.confirmed++;
       }
     });
     

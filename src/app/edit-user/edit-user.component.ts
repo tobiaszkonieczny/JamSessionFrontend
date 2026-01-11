@@ -17,7 +17,7 @@ import {MatInput} from '@angular/material/input';
 import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../services/user.service';
-import {InstrumentsAndRatings, MusicGenre, UserType} from '../model/user.type';
+import {InstrumentsAndRating, MusicGenre, UserType} from '../model/user.type';
 import {MusicGenresService} from '../services/music-genres.service';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {catchError, forkJoin, of} from 'rxjs';
@@ -121,7 +121,7 @@ export class EditUserComponent implements OnInit {
 
     formValue.instruments = formValue.instruments.map((formValueInstrument: any) => {
       const tempInstrument = this.allInstruments.find((g) => g.name === formValueInstrument.name);
-      const returnInstrument: InstrumentsAndRatings = {
+      const returnInstrument: InstrumentsAndRating = {
         instrumentsAndRatingsId: undefined,
         instrumentId: tempInstrument?.id,
         instrumentName: tempInstrument?.name,

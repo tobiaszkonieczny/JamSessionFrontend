@@ -47,7 +47,7 @@
             <div class="instruments-section">
               <h4>Required Instruments</h4>
               <mat-chip-set>
-                @for (instrument of session.requiredInstruments; track instrument.id) {
+                @for (instrument of session.requiredInstruments; track $index) {
                   <mat-chip>{{ instrument.name }}</mat-chip>
                 }
               </mat-chip-set>

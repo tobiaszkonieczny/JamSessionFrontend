@@ -14,6 +14,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatChipSet, MatChip} from '@angular/material/chips';
 import {MatIconButton} from '@angular/material/button';
 import {NgIf} from '@angular/common';
+import { JamSessionType } from '../model/jamSession.type';
 
 @Component({
   selector: 'app-new-jam-session',
@@ -150,7 +151,7 @@ export class NewJamSessionComponent {
             }
         })
         console.log("genreid"+genre.id)
-        this.http.post(
+        this.http.post<JamSessionType>(
             'http://localhost:8080/api/jam/create',
             {
                 "startTime": `${this.jamSessionForm.value.date}T${this.jamSessionForm.value.time}:00`,
@@ -167,7 +168,7 @@ export class NewJamSessionComponent {
         )
             .subscribe({
                 next: (response) => {
-                    this.router.navigate(['/jam-session-page', response.body]);
+                    this.router.navigate(['/jam-session-page', response.body?.id]);
                 },
                 error: (error) => {
                     console.log(error)

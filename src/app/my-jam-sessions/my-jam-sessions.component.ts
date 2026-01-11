@@ -58,6 +58,7 @@ export class MyJamSessionsComponent {
 
     this.jamSessionService.getOwnedJamSessions(userId).subscribe({
       next: (sessions) => {
+        console.log('Loaded jam sessions:', sessions);
         this.jamSessions.set(sessions);
         this.isLoading.set(false);
       },

@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {InstrumentsAndRatings, UserType} from '../model/user.type';
+import {InstrumentsAndRating, UserType} from '../model/user.type';
 import {catchError, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {API_URLS} from '../config/api-urls';
 
@@ -102,7 +102,7 @@ export class UserService {
   updateUserImage(image: File) {
     const formData = new FormData();
     formData.append('file', image);
-    return this.http.post(`${this.apiUrls.IMAGE_URL}/upload`, formData, {});
+    return this.http.post(`${this.apiUrls.IMAGE_URL}/profile-picture`, formData, {});
   }
 
   private mapToUser(json: any): UserType {
@@ -117,7 +117,7 @@ export class UserService {
     };
   }
 
-  private mapToInstrumentsAndRatings(json: any): InstrumentsAndRatings[] {
+  private mapToInstrumentsAndRatings(json: any): InstrumentsAndRating[] {
     console.log(json);
     return json.map((item: {
       id: number;

@@ -54,7 +54,7 @@
             color="primary"
             selected
           >
-            {{ item.instrument.name }}
+            {{ item.instrumentName }}
           </mat-chip>
         </mat-chip-set>
         <div class="info" *ngIf="myConfirmedInstruments().length > 0">
@@ -121,12 +121,12 @@
 
         <ng-container matColumnDef="attendee">
           <th *matHeaderCellDef mat-header-cell> Attendee</th>
-          <td *matCellDef="let element" mat-cell> {{ element.user.name}}</td>
+          <td *matCellDef="let element" mat-cell> {{ element.name}}</td>
         </ng-container>
 
         <ng-container matColumnDef="instrument">
           <th *matHeaderCellDef mat-header-cell> Instrument</th>
-          <td *matCellDef="let element" mat-cell> {{ element.instrument.name}}</td>
+          <td *matCellDef="let element" mat-cell> {{ element.instrumentName}}</td>
         </ng-container>
 
         <ng-container matColumnDef="rating">
@@ -137,7 +137,7 @@
         <ng-container matColumnDef="page">
           <th *matHeaderCellDef mat-header-cell></th>
           <td *matCellDef="let element" mat-cell>
-            <button (click)="navigateToPage(element.user.id)" class="next" mat-mini-fab>
+            <button (click)="navigateToPage(element.userId)" class="next" mat-mini-fab>
               <mat-icon>
                 arrow_forward_ios
               </mat-icon>
@@ -150,7 +150,7 @@
           <td *matCellDef="let element" mat-cell>
             <button 
               *ngIf="canRemoveParticipant()"
-              (click)="removeParticipant(element.user.id, element.user.name)" 
+              (click)="removeParticipant(element.userId, element.name)" 
               mat-icon-button 
               color="warn"
               matTooltip="Remove participant">

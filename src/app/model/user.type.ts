@@ -12,7 +12,7 @@ export type UserType = {
   bio: string | undefined,
   profilePictureId: number | undefined,
   musicGenres: MusicGenre[],
-  instrumentsAndRatings: InstrumentsAndRatings[]
+  instrumentsAndRatings: InstrumentsAndRating[]
 }
 
 export type MusicGenre = {
@@ -20,7 +20,7 @@ export type MusicGenre = {
   name: string | undefined,
 }
 
-export type InstrumentsAndRatings = {
+export type InstrumentsAndRating = {
   instrumentsAndRatingsId: number | undefined,
   rating: number | undefined
   instrumentId: number | undefined,

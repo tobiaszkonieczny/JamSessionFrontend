@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {InstrumentsAndRatings} from '../model/user.type';
+import {InstrumentsAndRating} from '../model/user.type';
 import {API_URLS} from '../config/api-urls';
 import {Observable} from 'rxjs';
 
@@ -15,7 +15,7 @@ export class InstrumentsAndRatingsService {
 
   }
 
-  addInstrumentsAndRatings(value: InstrumentsAndRatings[]): Observable<any> {
+  addInstrumentsAndRatings(value: InstrumentsAndRating[]): Observable<any> {
     const filteredData = value.map(({userId, instrumentId, rating}) => ({userId, instrumentId, rating}));
     return this.http.post(`${this.apiUrls.INSTRUMENTS_AND_RATINGS_URL}/batch`,
       filteredData
