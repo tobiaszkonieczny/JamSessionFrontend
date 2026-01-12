@@ -1,81 +1,99 @@
-<div class="container">
-  <div class="header">
-    <h1>My Signed-Up Sessions</h1>
-    <p class="subtitle">Sessions you're participating in</p>
+<div class="signed-up-container">
+  <div class="floating-notes">
+    <div class="note note-1">♪</div>
+    <div class="note note-2">♫</div>
+    <div class="note note-3">♬</div>
+    <div class="note note-4">♪</div>
   </div>
 
-  @if (isLoading()) {
-    <div class="loading">
-      <mat-icon>hourglass_empty</mat-icon>
-      <p>Loading your sessions...</p>
+  <div class="content">
+    <div class="page-header">
+      <h1 class="page-title">
+        <mat-icon>event_available</mat-icon>
+        My Signed-Up Sessions
+      </h1>
+      <p class="page-subtitle">Sessions you're participating in</p>
     </div>
-  } @else if (!hasSessions()) {
-    <div class="empty-state">
-      <mat-icon class="note-icon">event_busy</mat-icon>
-      <h2>No Sessions Yet</h2>
-      <p>You haven't signed up for any jam sessions. Find one to join!</p>
-      <button mat-raised-button color="primary" (click)="findSessions()">
-        <mat-icon>search</mat-icon>
-        Find Sessions
-      </button>
-    </div>
-  } @else {
-    <div class="sessions-grid">
-      @for (session of jamSessions(); track session.id) {
-        <mat-card class="session-card">
-          <mat-card-header>
-            <mat-card-title>
-              <div class="session-title">
+
+    @if (isLoading()) {
+      <div class="loading-state">
+        <mat-spinner diameter="60"></mat-spinner>
+        <p class="loading-text">Loading your sessions...</p>
+      </div>
+      } @else if (!hasSessions()) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">event_busy</mat-icon>
+        <h2>No Sessions Yet</h2>
+        <p>You haven't signed up for any jam sessions. Find one to join!</p>
+        <button mat-raised-button class="find-btn" (click)="findSessions()">
+          <mat-icon>search</mat-icon>
+          Find Sessions
+        </button>
+      </div>
+    } @else {
+      <div class="sessions-grid">
+        @for (session of jamSessions(); track session.id) {
+          <mat-card class="session-card">
+            <mat-card-header class="card-header">
+              <mat-card-title>
                 <mat-icon>music_note</mat-icon>
-                <span>{{ session.musicGenre.name }} Session</span>
+                {{ session.musicGenre.name }} Session
+              </mat-card-title>
+            </mat-card-header>
+            
+              <mat-card-content>
+              <div class="session-section">
+                <h4 class="section-title">
+                  <mat-icon>info</mat-icon>
+                  Session Details
+                </h4>
+                <div class="info-row">
+                  <mat-icon>person</mat-icon>
+                  <span>Host: {{ session.owner.name }}</span>
+                </div>
+                <div class="info-row">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>{{ formatDate(session.startTime) }}</span>
+                </div>
+                <div class="info-row">
+                  <mat-icon>location_on</mat-icon>
+                  <span>{{ session.location.latitude }}, {{ session.location.longitude }}</span>
+                </div>
               </div>
-            </mat-card-title>
-          </mat-card-header>
-          
-          <mat-card-content>
-            <div class="session-info">
-              <div class="info-row">
-                <mat-icon>person</mat-icon>
-                <span>Host: {{ session.owner.name }}</span>
-              </div>
-              <div class="info-row">
-                <mat-icon>calendar_today</mat-icon>
-                <span>{{ formatDate(session.startTime) }}</span>
-              </div>
-              <div class="info-row">
-                <mat-icon>location_on</mat-icon>
-                <span>{{ session.location.latitude }}, {{ session.location.longitude }}</span>
-              </div>
-            </div>
-            <div class="instruments-section">
-              <h4>Required Instruments</h4>
-              <mat-chip-set>
-                @for (instrument of session.requiredInstruments; track instrument.id) {
-                  <mat-chip>{{ instrument.name }}</mat-chip>
-                }
-              </mat-chip-set>
-            </div>
 
-            <div class="attendees-section">
-              <div class="attendees-badge">
-                <mat-icon>people</mat-icon>
-                <span>{{ session.confirmedInstruments.length }} attendees</span>
+              <div class="session-section">
+                <h4 class="section-title">
+                  <mat-icon>piano</mat-icon>
+                  Required Instruments
+                </h4>
+                <mat-chip-set>
+                  @for (instrument of session.requiredInstruments; track instrument.id) {
+                    <mat-chip>{{ instrument.name }}</mat-chip>
+                  }
+                </mat-chip-set>
               </div>
-            </div>
-          </mat-card-content>
 
-          <div class="card-actions">
-            <button mat-raised-button color="primary" (click)="viewSession(session.id)">
-              <mat-icon>visibility</mat-icon>
-              View Details
-            </button>
-            <button mat-stroked-button color="warn" (click)="leaveSession(session)">
-              <mat-icon>exit_to_app</mat-icon>
-              Leave Session
-            </button>
-          </div>
-        </mat-card>
-      }
-    </div>
-  }
+              <div class="attendees-section">
+                <div class="attendees-badge">
+                  <mat-icon>people</mat-icon>
+                  <span>{{ session.confirmedInstruments.length }} attendees</span>
+                </div>
+              </div>
+            </mat-card-content>
+
+            <mat-card-actions class="card-actions">
+              <button mat-raised-button class="view-btn" (click)="viewSession(session.id)">
+                <mat-icon>visibility</mat-icon>
+                View Details
+              </button>
+              <button mat-stroked-button class="leave-btn" (click)="leaveSession(session)">
+                <mat-icon>exit_to_app</mat-icon>
+                Leave
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    }
+  </div>
 </div>

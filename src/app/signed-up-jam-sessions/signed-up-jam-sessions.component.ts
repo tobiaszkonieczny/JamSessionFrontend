@@ -1,10 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatChip, MatChipSet } from '@angular/material/chips';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { JamSessionService } from '../services/jam-session.service';
 import { JamSessionType } from '../model/jamSession.type';
 import { jwtDecode } from 'jwt-decode';
@@ -18,10 +19,12 @@ import { jwtDecode } from 'jwt-decode';
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
+    MatCardActions,
     MatButton,
     MatIcon,
     MatChip,
     MatChipSet,
+    MatProgressSpinner
   ],
   templateUrl: './signed-up-jam-sessions.component.html',
   styleUrl: './signed-up-jam-sessions.component.css'

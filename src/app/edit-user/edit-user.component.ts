@@ -12,7 +12,7 @@ import {
   Validators
 } from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {MatError, MatFormField, MatLabel, MatPrefix, MatSuffix} from '@angular/material/form-field';
+import {MatError, MatFormField, MatLabel, MatPrefix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
@@ -26,6 +26,7 @@ import {InstrumentsService} from "../services/instruments.service";
 import {InstrumentsAndRatingsService} from "../services/instruments-and-ratings.service";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-user',
@@ -46,8 +47,7 @@ import {MatIcon} from '@angular/material/icon';
     MatCardContent,
     MatIcon,
     MatError,
-    MatPrefix,
-    MatSuffix
+    MatPrefix
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.css'
@@ -59,6 +59,7 @@ export class EditUserComponent implements OnInit {
   userId: number | undefined;
   allInstruments: Instrument[] = [];
   initialInstruments: string[] = []; // Instrumenty które już były w profilu
+  initialInstrumentsWithIds: Map<string, number> = new Map(); // Mapa: nazwa instrumentu -> instrumentsAndRatingsId
 
   constructor(
     private path: ActivatedRoute,
@@ -68,7 +69,8 @@ export class EditUserComponent implements OnInit {
     private router: Router,
     private instrumentsService: InstrumentsService,
     private fb: FormBuilder,
-    private instrumentsAndRatingsService: InstrumentsAndRatingsService
+    private instrumentsAndRatingsService: InstrumentsAndRatingsService,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -91,6 +93,12 @@ export class EditUserComponent implements OnInit {
         this.musicGenres = genres;
         this.allInstruments = instruments;
         this.initialInstruments = user?.instrumentsAndRatings?.map(i => i.instrumentName || '') || [];
+        // Zapisz ID instrumentów do późniejszego usunięcia
+        user?.instrumentsAndRatings?.forEach(i => {
+          if (i.instrumentName && i.instrumentsAndRatingsId) {
+            this.initialInstrumentsWithIds.set(i.instrumentName, i.instrumentsAndRatingsId);
+          }
+        });
         this.initForm(user);
       });
     }
@@ -99,16 +107,13 @@ export class EditUserComponent implements OnInit {
   onSelectionChange(selectedInstruments: string[]): void {
     if (!this.editForm) return;
 
-    // Upewnij się, że wszystkie początkowe instrumenty są zawsze wybrane
-    const allSelected = [...new Set([...this.initialInstruments, ...selectedInstruments])];
-
     // Pobierz aktualne nazwy instrumentów w FormArray
     const existingInstrumentNames = this.instrumentsArray.controls.map(
       (control) => control.get('name')?.value
     );
 
     // Dodaj nowe instrumenty
-    allSelected.forEach((instrumentName) => {
+    selectedInstruments.forEach((instrumentName) => {
       if (!existingInstrumentNames.includes(instrumentName)) {
         this.instrumentsArray.push(
           this.fb.group({
@@ -119,18 +124,17 @@ export class EditUserComponent implements OnInit {
       }
     });
 
-    // Usuń instrumenty, które zostały odznaczone (ale tylko te które NIE były początkowe)
+    // Usuń instrumenty, które zostały odznaczone
     for (let i = this.instrumentsArray.length - 1; i >= 0; i--) {
       const control = this.instrumentsArray.at(i);
       const instrumentName = control.get('name')?.value;
-      // Nie usuwaj instrumentów które były już w profilu
-      if (!allSelected.includes(instrumentName) && !this.initialInstruments.includes(instrumentName)) {
+      if (!selectedInstruments.includes(instrumentName)) {
         this.instrumentsArray.removeAt(i);
       }
     }
 
     // Zaktualizuj selectedInstruments w formularzu
-    this.editForm.get('selectedInstruments')?.setValue(allSelected, {emitEvent: false});
+    this.editForm.get('selectedInstruments')?.setValue(selectedInstruments, {emitEvent: false});
   }
 
   editUser(): void {
@@ -140,6 +144,14 @@ export class EditUserComponent implements OnInit {
       return genre ? genre.id : null;
     });
 
+    // Znajdź instrumenty które zostały usunięte
+    const currentInstrumentNames = formValue.instruments.map((i: any) => i.name);
+    const removedInstruments: number[] = [];
+    this.initialInstrumentsWithIds.forEach((id, name) => {
+      if (!currentInstrumentNames.includes(name)) {
+        removedInstruments.push(id);
+      }
+    });
 
     formValue.instruments = formValue.instruments.map((formValueInstrument: any) => {
       const tempInstrument = this.allInstruments.find((g) => g.name === formValueInstrument.name);
@@ -155,29 +167,69 @@ export class EditUserComponent implements OnInit {
       return returnInstrument;
     })
 
-
-    forkJoin({
-      user: this.userService.updateUser(formValue, this.userId!).pipe(
+    // Najpierw usuń instrumenty, potem zapisz nowe/zaktualizowane
+    const deleteObservables = removedInstruments.map(id => 
+      this.instrumentsAndRatingsService.deleteInstrumentAndRating(id).pipe(
         catchError((err: any) => {
-          console.error('User update failed:', err);
-          return of(null);
-        })
-      ),
-      instrumentsAndRatings: this.instrumentsAndRatingsService.addInstrumentsAndRatings(formValue.instruments).pipe(
-        catchError((err: any) => {
-          console.error('Adding instruments failed:', err);
+          console.error('Deleting instrument failed:', err);
+          if (err.status === 403) {
+            this.snackBar.open(
+              'Cannot delete instrument because you are signed up for a session with it',
+              'Close',
+              {
+                duration: 6000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                panelClass: ['error-snackbar']
+              }
+            );
+          }
           return of(null);
         })
       )
-    }).subscribe({
-      next: (result: { user: any; instrumentsAndRatings: any }) => {
-        console.log(result);
-        if (result.user) this.userService.clearUserCache(this.userId!);
-        this.router.navigate(['/profile'], {queryParams: {userId: this.userId}});
-      },
-      error: (err: any) => {
-        console.error('Error in forkJoin:', err);
-      }
+    );
+
+    // Jeśli są instrumenty do usunięcia, usuń je najpierw
+    const deletePhase = deleteObservables.length > 0 
+      ? forkJoin(deleteObservables)
+      : of([]);
+
+    deletePhase.subscribe(() => {
+      forkJoin({
+        user: this.userService.updateUser(formValue, this.userId!).pipe(
+          catchError((err: any) => {
+            console.error('User update failed:', err);
+            return of(null);
+          })
+        ),
+        instrumentsAndRatings: this.instrumentsAndRatingsService.addInstrumentsAndRatings(formValue.instruments).pipe(
+          catchError((err: any) => {
+            console.error('Adding instruments failed:', err);
+            if (err.status === 403) {
+              this.snackBar.open(
+                'Nie można zmienić ratingu, ponieważ jesteś zapisany do sesji z tym instrumentem',
+                'Zamknij',
+                {
+                  duration: 6000,
+                  horizontalPosition: 'center',
+                  verticalPosition: 'top',
+                  panelClass: ['error-snackbar']
+                }
+              );
+            }
+            return of(null);
+          })
+        )
+      }).subscribe({
+        next: (result: { user: any; instrumentsAndRatings: any }) => {
+          console.log(result);
+          if (result.user) this.userService.clearUserCache(this.userId!);
+          this.router.navigate(['/profile'], {queryParams: {userId: this.userId}});
+        },
+        error: (err: any) => {
+          console.error('Error in forkJoin:', err);
+        }
+      });
     });
   }
 

@@ -30,6 +30,7 @@ import { ImageService } from '../services/image.service';
       position: relative;
       overflow: hidden;
       background-color: #f0f0f0;
+      max-height: unset !important;
     }
 
     .image-skeleton {

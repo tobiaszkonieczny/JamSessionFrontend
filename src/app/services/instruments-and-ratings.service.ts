@@ -22,4 +22,8 @@ export class InstrumentsAndRatingsService {
     )
 
   }
+
+  deleteInstrumentAndRating(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrls.INSTRUMENTS_AND_RATINGS_URL}?id=${id}`);
+  }
 }

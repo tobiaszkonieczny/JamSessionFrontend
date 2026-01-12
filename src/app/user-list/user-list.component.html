@@ -1,51 +1,73 @@
-<div class="container">
-  <div class="header">
-    <h1>Musicians Directory</h1>
-    <p class="subtitle">Find and connect with talented musicians</p>
+<div class="users-list-container">
+  <div class="floating-notes">
+    <div class="note note-1">♪</div>
+    <div class="note note-2">♫</div>
+    <div class="note note-3">♬</div>
+    <div class="note note-4">♪</div>
   </div>
 
-  <div class="filters-section">
-    <div class="filters-grid">
-      <mat-form-field appearance="outline">
-        <mat-label>Music Genre</mat-label>
-        <mat-select [(value)]="selectedGenre" (selectionChange)="selectedGenre.set($event.value)">
-          @if (selectedGenre()) {
-            <mat-option (click)="clearGenre()">Clear</mat-option>
-          }
-          @for (genre of genreOptions(); track genre) {
-            <mat-option [value]="genre">{{ genre }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Instrument</mat-label>
-        <mat-select [(value)]="selectedInstrument" (selectionChange)="selectedInstrument.set($event.value)">
-          @if (selectedInstrument()) {
-            <mat-option (click)="clearInstrument()">Clear</mat-option>
-          }
-          @for (instrument of instrumentOptions(); track instrument) {
-            <mat-option [value]="instrument">{{ instrument }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+  <div class="content">
+    <div class="page-header">
+      <h1 class="page-title">
+        <mat-icon>groups</mat-icon>
+        Musicians Directory
+      </h1>
+      <p class="page-subtitle">Find and connect with talented musicians</p>
     </div>
 
-    <button 
-      mat-stroked-button 
-      class="reset-btn" 
-      (click)="clearAllFilters()" 
-      [disabled]="!selectedGenre() && !selectedInstrument()">
-      <mat-icon>clear_all</mat-icon>
-      Reset Filters
-    </button>
-  </div>
+    <mat-card class="filters-card">
+      <mat-card-header class="card-header">
+        <mat-card-title>
+          <mat-icon>filter_list</mat-icon>
+          Filter Musicians
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="filters-grid">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Music Genre</mat-label>
+            <mat-icon matPrefix>music_note</mat-icon>
+            <mat-select [(value)]="selectedGenre" (selectionChange)="selectedGenre.set($event.value)">
+              @if (selectedGenre()) {
+                <mat-option (click)="clearGenre()">Clear</mat-option>
+              }
+              @for (genre of genreOptions(); track genre) {
+                <mat-option [value]="genre">{{ genre }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
 
-  <div class="results-info">
-    <p>{{ filteredUsers().length }} {{ filteredUsers().length === 1 ? 'musician' : 'musicians' }} found</p>
-  </div>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Instrument</mat-label>
+            <mat-icon matPrefix>piano</mat-icon>
+            <mat-select [(value)]="selectedInstrument" (selectionChange)="selectedInstrument.set($event.value)">
+              @if (selectedInstrument()) {
+                <mat-option (click)="clearInstrument()">Clear</mat-option>
+              }
+              @for (instrument of instrumentOptions(); track instrument) {
+                <mat-option [value]="instrument">{{ instrument }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-  <div class="users-grid">
+        <button 
+          mat-stroked-button 
+          class="reset-btn" 
+          (click)="clearAllFilters()" 
+          [disabled]="!selectedGenre() && !selectedInstrument()">
+          <mat-icon>clear_all</mat-icon>
+          Reset Filters
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="results-info">
+      <mat-icon>info</mat-icon>
+      <span>{{ filteredUsers().length }} {{ filteredUsers().length === 1 ? 'musician' : 'musicians' }} found</span>
+    </div>
+
+    <div class="users-grid">
     @for (user of filteredUsers(); track user.id) {
       <mat-card class="user-card mat-elevation-z4">
         <div class="card-header">
@@ -103,7 +125,7 @@
         <mat-card-actions>
           <button 
             mat-raised-button 
-            color="primary" 
+            class="view-profile-btn"
             (click)="navigateToProfile(user.id)">
             <mat-icon>arrow_forward</mat-icon>
             View Profile
@@ -117,5 +139,6 @@
         <p>Try adjusting your filters</p>
       </div>
     }
+    </div>
   </div>
 </div>

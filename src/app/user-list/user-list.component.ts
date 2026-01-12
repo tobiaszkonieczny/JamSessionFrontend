@@ -1,7 +1,7 @@
 import {Component, computed, effect, inject, OnInit, signal} from '@angular/core';
 import {UserService} from '../services/user.service';
 import {UserType} from '../model/user.type';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MatPrefix} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -21,7 +21,8 @@ import {Instrument} from '../model/jamSession.type';
     MatCardModule,
     MatChipsModule,
     MatIconModule,
-    LazyImageComponent
+    LazyImageComponent,
+    MatPrefix
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
@@ -103,7 +104,9 @@ export class UserListComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getAllUsers().subscribe({
-      next: (users) => this.allUsers.set(users),
+      next: (users) => {this.allUsers.set(users)
+        console.log('Loaded users:', users);
+      },
       error: (err) => console.error('Failed to load users', err)
     });
   }

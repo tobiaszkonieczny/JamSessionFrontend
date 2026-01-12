@@ -1,10 +1,10 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatPrefix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MapComponent} from '../map/map.component';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
@@ -14,6 +14,7 @@ import {InstrumentsService} from '../services/instruments.service';
 import {HttpClient} from '@angular/common/http';
 import {EditJamSessionDto, Instrument, JamSessionType} from '../model/jamSession.type';
 import {MusicGenre} from '../model/user.type';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-edit-jam-session',
@@ -32,7 +33,10 @@ import {MusicGenre} from '../model/user.type';
     MatCard,
     MatLabel,
     MatIcon,
-    NgIf
+    NgIf,
+    MatProgressSpinner,
+    MatIconButton,
+    MatPrefix
   ],
   templateUrl: './edit-jam-session.component.html',
   styleUrl: './edit-jam-session.component.css'

@@ -82,11 +82,6 @@ mat-card:hover {
   margin: 0 !important;
 }
 
-::ng-deep mat-card mat-card-title mat-icon {
-  font-size: 1.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
-}
 
 ::ng-deep mat-card mat-card-content {
   padding: var(--spacing-l) !important;
@@ -127,9 +122,7 @@ mat-card:hover {
 
 .info-item mat-icon {
   color: var(--mat-sys-primary);
-  font-size: 1.25rem !important;
-  width: 1.25rem !important;
-  height: 1.25rem !important;
+  overflow: visible;
 }
 
 .info-item span {
@@ -157,9 +150,7 @@ mat-card:hover {
 
 .section-title mat-icon {
   color: var(--mat-sys-primary);
-  font-size: 1.25rem !important;
-  width: 1.25rem !important;
-  height: 1.25rem !important;
+
 }
 
 .instruments-chips {
@@ -205,11 +196,7 @@ mat-card:hover {
   color: var(--mat-sys-on-tertiary);
 }
 
-.instrument-chip mat-icon {
-  font-size: 1rem !important;
-  width: 1rem !important;
-  height: 1rem !important;
-}
+
 
 .count-badge {
   padding: 2px 8px;
@@ -423,8 +410,6 @@ mat-card:hover {
   right: -10px;
   background: var(--mat-sys-error) !important;
   color: var(--mat-sys-on-error) !important;
-  width: 32px !important;
-  height: 32px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -497,11 +482,7 @@ mat-card:hover {
   font-weight: 600;
 }
 
-.comment-author mat-icon {
-  font-size: 1.5rem !important;
-  width: 1.5rem !important;
-  height: 1.5rem !important;
-}
+
 
 .comment-meta {
   display: flex;
@@ -586,9 +567,8 @@ mat-card:hover {
 }
 
 .reply-btn mat-icon {
-  font-size: 18px !important;
-  width: 18px !important;
-  height: 18px !important;
+  vertical-align: middle;
+
 }
 
 .replies {
@@ -608,9 +588,7 @@ mat-card:hover {
 }
 
 .no-comments mat-icon {
-  font-size: 4rem !important;
-  width: 4rem !important;
-  height: 4rem !important;
+
   margin-bottom: var(--spacing-l);
   opacity: 0.4;
 }
