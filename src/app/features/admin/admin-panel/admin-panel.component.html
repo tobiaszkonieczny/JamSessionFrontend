@@ -1,0 +1,51 @@
+<div class="admin-panel">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Admin Panel</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="section">
+        <h2>Music Genres</h2>
+        <form [formGroup]="genreForm!" (ngSubmit)="addGenre()">
+          <mat-form-field>
+            <input matInput placeholder="New Genre" formControlName="genreName">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!genreForm.valid">Add Genre</button>
+        </form>
+        <mat-list>
+          @for(genre of genres(); track genre) {
+          <mat-list-item>
+            {{ genre.name }}
+            <button mat-icon-button color="warn" (click)="removeGenre(genre.id!)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+        </mat-list>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="section">
+        <h2>Instruments</h2>
+        <form [formGroup]="instrumentForm!" (ngSubmit)="addInstrument()">
+          <mat-form-field>
+            <input matInput placeholder="New Instrument" formControlName="instrumentName">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!instrumentForm.valid">Add Instrument</button>
+        </form>
+        <mat-list>
+          @for(instrument of instruments(); track instrument) {
+          <mat-list-item>
+            {{ instrument.name }}
+            <button mat-icon-button color="warn" (click)="removeInstrument(instrument.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+        </mat-list>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

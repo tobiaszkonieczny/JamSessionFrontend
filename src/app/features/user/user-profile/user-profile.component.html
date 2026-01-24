@@ -1,0 +1,105 @@
+<div class='profile-container'>
+  <div class="profile-content">
+    <!-- Header Card with Profile Picture -->
+    <mat-card class='profile-header-card'>
+      <div class="profile-header">
+        <div class="profile-picture-wrapper">
+          <div [style.background-image]="'url(' + userPictureUrl() + ')'" class="profile-picture">
+            @if (isChangePossible()) {
+              <div class="edit-overlay" (click)="fileInput.click()">
+                <mat-icon>photo_camera</mat-icon>
+                <span>Change Photo</span>
+              </div>
+              <input type="file" #fileInput (change)="onEditImage($event)" class="file-input" accept=".png,.jpg,.jpeg">
+            }
+          </div>
+        </div>
+        
+        <div class="profile-info">
+          <h1 class='profile-name'>{{ user()?.name }}</h1>
+          @if (isChangePossible()) {
+            <button class="edit-profile-btn" (click)="onEditButtonClick()" mat-raised-button>
+              <mat-icon>edit</mat-icon>
+              <span>Edit Profile</span>
+            </button>
+          }
+        </div>
+      </div>
+    </mat-card>
+
+    <!-- Bio Section -->
+    @if (user()?.bio) {
+      <mat-card class='section-card bio-card'>
+        <mat-card-header>
+          <mat-card-title class="section-title">
+            <mat-icon>person</mat-icon>
+            <span>Bio</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="bio-content">
+          {{ user()?.bio }}
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- Genres Section -->
+    @if (user()?.musicGenres?.length) {
+      <mat-card class='section-card genres-card'>
+        <mat-card-header>
+          <mat-card-title class="section-title">
+            <mat-icon>library_music</mat-icon>
+            <span>Favorite Genres</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-chip-set class="genres-chips">
+            @for (genre of user()?.musicGenres; track genre.id) {
+              <mat-chip highlighted>
+                <mat-icon>music_note</mat-icon>
+                {{ genre.name }}
+              </mat-chip>
+            }
+          </mat-chip-set>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- Instruments Section -->
+    @if (user()?.instrumentsAndRatings?.length) {
+      <mat-card class='section-card instruments-card'>
+        <mat-card-header>
+          <mat-card-title class="section-title">
+            <mat-icon>piano</mat-icon>
+            <span>Instruments & Skills</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="instruments-list">
+            @for (instrument of user()?.instrumentsAndRatings; track instrument.instrumentsAndRatingsId) {
+              <div class="instrument-item">
+                <div class="instrument-header">
+                  <span class="instrument-name">{{ instrument.instrumentName }}</span>
+                  <span class="instrument-rating">{{ instrument.rating }}/5</span>
+                </div>
+                <mat-progress-bar 
+                  [value]="(instrument?.rating || 0) * 20" 
+                  mode="determinate"
+                  class="instrument-progress">
+                </mat-progress-bar>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <!-- Floating Notes Background -->
+  <div class="floating-notes">
+    <div class="note note-1">♪</div>
+    <div class="note note-2">♫</div>
+    <div class="note note-3">♩</div>
+    <div class="note note-4">♬</div>
+  </div>
+</div>
+

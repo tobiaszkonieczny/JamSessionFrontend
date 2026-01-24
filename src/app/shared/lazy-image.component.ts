@@ -1,6 +1,6 @@
 import { Component, Input, signal, effect, inject } from '@angular/core';
 import { NgStyle } from '@angular/common';
-import { ImageService } from '../services/image.service';
+import { ImageService } from './services/image-domain.service';
 
 @Component({
   selector: 'app-lazy-image',
@@ -101,7 +101,7 @@ export class LazyImageComponent {
     this.isLoading.set(true);
     this.hasError.set(false);
 
-    this.imageService.getImageAsDataUrl(imageId).subscribe({
+    this.imageService.getImageAsDataUrl(`${imageId}`).subscribe({
       next: (dataUrl) => {
         this.imageDataUrl.set(dataUrl);
       },

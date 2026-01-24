@@ -1,18 +1,18 @@
 import {Routes} from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {UserProfileComponent} from "./user-profile/user-profile.component";
+import { AdminPanelComponent } from './features/admin/admin-panel/admin-panel.component';
+import { HomepageComponent } from './features/homepage/homepage.component';
+import { EditJamSessionComponent } from './features/jam-session/edit-jam-session/edit-jam-session.component';
+import { JamSessionPageComponent } from './features/jam-session/jam-session-page/jam-session-page.component';
+import { JamSessionComponent } from './features/jam-session/jam-session/jam-session.component';
+import { MyJamSessionsComponent } from './features/jam-session/my-jam-sessions/my-jam-sessions.component';
+import { NewJamSessionComponent } from './features/jam-session/new-jam-session/new-jam-session.component';
+import { SignedUpJamSessionsComponent } from './features/jam-session/signed-up-jam-sessions/signed-up-jam-sessions.component';
+import { LoginComponent } from './features/login/login.component';
+import { RegisterComponent } from './features/register/register.component';
+import { EditUserComponent } from './features/user/edit-user/edit-user.component';
+import { UserListComponent } from './features/user/user-list/user-list.component';
+import { UserProfileComponent } from './features/user/user-profile/user-profile.component';
 
-import {RegisterComponent} from './register/register.component';
-import {HomepageComponent} from './homepage/homepage.component';
-import {JamSessionComponent} from './jam-session/jam-session.component';
-import {EditUserComponent} from './edit-user/edit-user.component';
-import {JamSessionPageComponent} from './jam-session-page/jam-session-page.component';
-import {AdminPanelComponent} from './admin-panel/admin-panel.component';
-import {MyJamSessionsComponent} from './my-jam-sessions/my-jam-sessions.component';
-import {UserListComponent} from './user-list/user-list.component';
-import {EditJamSessionComponent} from './edit-jam-session/edit-jam-session.component';
-import {SignedUpJamSessionsComponent} from './signed-up-jam-sessions/signed-up-jam-sessions.component';
-import {NewJamSessionComponent} from './new-jam-session/new-jam-session.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
